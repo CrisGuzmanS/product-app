@@ -1,0 +1,16 @@
+body{
+    background: #fbfbfb;
+}
+
+.primary{
+    background: #2a373d !important;
+    border: none;
+}
+
+.bg-primary{
+    background: #2a373d !important; 
+}
+
+.cl-white{
+    color: white;
+}
