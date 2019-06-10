@@ -1,6 +1,6 @@
 // Clase de los productos
-class Product{
-    constructor(name, price, year){
+class Product {
+    constructor(name, price, year) {
         this.name = name;
         this.price = price;
         this.year = year;
@@ -8,12 +8,12 @@ class Product{
 }
 
 // Clase de la Interfaz de Usuario
-class UI{
+class UI {
 
-    constructor(){}
+    constructor() { }
 
-    addProduct(product){
-        
+    addProduct(product) {
+
         console.log(product);
 
         // Obtengo el contenedor de la lista de productos
@@ -21,34 +21,93 @@ class UI{
 
         // Creo nuevo elemento de la lista
         const element = document.createElement('div');
+        element.className = "col-12 col-md-6 col-lg-4";
         element.innerHTML = `
-            <div class="card text-center mb-2">
-                <div class="card-body">
-                    <strong>Product Name</strong>: ${product.name}
-                    <strong>Product Price</strong>: ${product.price}
-                    <strong>Product Year</strong>: ${product.year}
-                    <a href="#" class="btn btn-danger" name="delete">DELETE</a>
+            <div class="cntr">
+                    <!--Card 01-->
+                    <div class="crd">
+                        <!--Card - head-->
+                        <div class="crd-hd">
+                            <!--Card - logo-->
+                            <img src="img/logo-nike.png" alt="nike" class="card-logo">
+                            <!--Card - product-->
+                            <img src="img/shirt-02.png" alt="shirt" class="product-img">
+                            <!--Card- details-->
+                            <div class="product-details">
+                                <h2>${product.name}</h2>
+                                Casual t-shirt that will make you 
+                                look great and cool in this hot season
+                            </div>
+                            <div class="back-text">
+                                ${product.year}
+                            </div>
+                        </div>
+                        <!--Card - body-->
+                        <div class="crd-bdy">
+                            <div class="product-desc">
+                                <span class="product-title">
+                                    <b>Hartbee</b>spoort
+                                    <span class="badge">
+                                        New
+                                    </span>
+                                </span>
+                                <span class="product-caption">
+                                    Casual collection
+                                </span>
+                                <span class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star gray"></i>
+                                </span>
+                            </div>
+                            <div class="product-properties">
+                                <span class="product-size">
+                                    <h4>Size</h4>
+                                    <ul class="ul-size">
+                                        <li><a href="#">7</a></li>
+                                        <li><a href="#">8</a></li>
+                                        <li><a href="#">9</a></li>
+                                        <li><a href="#" class="active">10</a></li>
+                                        <li><a href="#">11</a></li>
+                                    </ul>
+                                </span>
+                                <span class="product-color">
+                                    <h4>Colour</h4>
+                                    <ul class="ul-color">
+                                        <li><a href="#" class="orange active"></a></li>
+                                        <li><a href="#" class="green"></a></li>
+                                        <li><a href="#" class="yellow"></a></li>
+                                    </ul>
+                                </span>
+                                <span class="product-price">
+                                    MXN<b>${product.price}</b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
         `;
 
-        // Inserto nuevo elemento de la lista
+        // Inserto nuevo elemento en la lista
         product_list.appendChild(element);
 
         // Limpio el formulario
         this.resetForm();
     }
 
-    resetForm(){
+    resetForm() {
 
         // Limpio el formulario
         document.getElementById("product-form").reset();
     }
 
-    deleteProdut(element){
+    deleteProdut(element) {
 
         // si el usuario presionó delete, entonces eliminamos el producto
-        if(element.name === 'delete'){
+        if (element.name === 'delete') {
             element.parentElement.parentElement.parentElement.remove();
         }
 
@@ -56,7 +115,7 @@ class UI{
         this.showMessage('Produt deleted successfully', 'success');
     }
 
-    showMessage( message, cssClass){
+    showMessage(message, cssClass) {
 
         // Creo la notificación
         const div = document.createElement('div');
@@ -69,13 +128,13 @@ class UI{
         container.insertBefore(div, app);
 
         // Desaparezco mensaje después de 3 segundos
-        setTimeout(function(){
+        setTimeout(function () {
             document.querySelector('.alert').remove();
-        },3000);
+        }, 3000);
 
     }
 
-    addProdut(){
+    addProdut() {
 
     }
 
@@ -87,8 +146,8 @@ class UI{
 
 // Añador producto cuando el usuario da click
 document.getElementById("product-form")
-    .addEventListener("submit", function(e){
-        
+    .addEventListener("submit", function (e) {
+
         // Creo la interfaz de usuario
         const ui = new UI();
 
@@ -97,24 +156,27 @@ document.getElementById("product-form")
         const price = document.getElementById('price').value;
         const year = document.getElementById('year').value;
 
-        if(name === "" || price === "" || year === ""){
-            return ui.showMessage('Complete fields please', 'danger');
-        } 
+        // Muestro error si el usuario no ha ingresado algún dato
+        if (name === "" || price === "" || year === "") {
+            ui.showMessage('Complete fields please', 'danger');
 
-        // Creo nuevo producto
-        const product = new Product(name, price, year);
+        } else {
+            
+            // Creo nuevo producto
+            const product = new Product(name, price, year);
 
-        // Inserto nuevo producto en la lista y notifico
-        ui.addProduct(product);
-        ui.showMessage('Product added succesfully', 'success');     
+            // Inserto nuevo producto en la lista y notifico
+            ui.addProduct(product);
+            ui.showMessage('Product added succesfully', 'success');
+        }
 
         // Cancelo refresh de la página
         e.preventDefault();
     });
 
 // Eliminar producto cuando el usuario da click
-document.getElementById('product-list').addEventListener('click', function(e){
-    
+document.getElementById('product-list').addEventListener('click', function (e) {
+
     const ui = new UI();
     ui.deleteProduct(e.target);
 
